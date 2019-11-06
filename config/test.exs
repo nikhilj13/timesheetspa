@@ -2,7 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :timesheetspa, Timesheetspa.Repo,
-  username: "postgres",
+  username: "nikhil",
   password: "postgres",
   database: "timesheetspa_test",
   hostname: "localhost",
