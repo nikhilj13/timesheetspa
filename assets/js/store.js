@@ -15,9 +15,19 @@ function login(st0 = {email: "", password: "", user_type: "worker", errors: null
 	}
 }
 
+function new_job(st0 = {job_code: "", budget: "", name: "", description: "", errors: null}, action) {
+	switch(action.type) {
+		case 'CHANGE_NEW_JOB':
+			return Object.assign({}, st0, action.data);
+		default:
+			return st0;
+	}
+}
+
 function forms(st0, action) {
 	let reducer = combineReducers({
 		login,
+		new_job,
 	});
 	return reducer(st0, action);
 }

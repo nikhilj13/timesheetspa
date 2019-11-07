@@ -53,12 +53,15 @@ export default class Timesheet extends React.Component {
   }
 
   render() {
+    const { taskRows } = this.state;
     const addRemoveRows = (
       <ButtonToolbar
         style={{ display: "flex", justifyContent: "center", marginTop: "1em" }}
       >
         <Button
+          disabled={ taskRows == 8 }
           variant="outline-success"
+          size="sm"
           style={{ marginRight: "1em" }}
           onClick={() => {
             this.changeRows("add");
@@ -67,7 +70,9 @@ export default class Timesheet extends React.Component {
           Add a Row
         </Button>
         <Button
+          disabled={ taskRows == 1 }
           variant="outline-danger"
+          size="sm"
           onClick={() => {
             this.changeRows("remove");
           }}
@@ -87,7 +92,11 @@ export default class Timesheet extends React.Component {
           </Col>
           <Col />
           <Col />
-          <Col />
+          <Col>
+            <Button style={{ float: 'right'}} variant="outline-dark" size="lg">
+              Submit Timesheet
+            </Button>
+          </Col>
         </Form.Row>
         <br />
         <Form.Row>

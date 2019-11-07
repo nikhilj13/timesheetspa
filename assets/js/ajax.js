@@ -1,9 +1,11 @@
 import store from "./store";
 
 export function post(path, body) {
-  let state = store.getState();
-  let token = state.session.token;
-
+	let state = store.getState();
+	let token = "";
+	if (state.session && state.session.token) {
+		token = state.session.token;
+	}
   return fetch("/ajax" + path, {
     method: "post",
     credentials: "same-origin",
@@ -11,7 +13,7 @@ export function post(path, body) {
       "x-csrf-token": window.csrf_token,
       "content-type": "application/json; charset=UTF-8",
       accept: "application/json",
-      "x-auth": token || ""
+      "x-auth": token
     }),
     body: JSON.stringify(body)
   }).then(resp => resp.json());
@@ -19,8 +21,10 @@ export function post(path, body) {
 
 export function get(path) {
   let state = store.getState();
-  let token = state.session.token;
-
+  let token = "";
+	if (state.session && state.session.token) {
+		token = state.session.token;
+	}
   return fetch("/ajax" + path, {
     method: "get",
     credentials: "same-origin",
@@ -28,24 +32,26 @@ export function get(path) {
       "x-csrf-token": window.csrf_token,
       "content-type": "application/json; charset=UTF-8",
       accept: "application/json",
-      "x-auth": token || ""
+      "x-auth": token
     })
   }).then(resp => resp.json());
 }
 
 export function submit_login(form) {
   let state = store.getState();
-  let data = state.forms.login;
+	let data = state.forms.login;
+	console.log("here")
+	console.log("submit_login data", data);
 
   post("/sessions", data).then(resp => {
-    console.log(resp);
-    if (resp.token) {
+    console.log("Response from submit_login", resp);
+    if ( resp && resp.token) {
       localStorage.setItem("session", JSON.stringify(resp));
       store.dispatch({
         type: "LOG_IN",
         data: resp
       });
-      form.redirect("/test");
+      form.redirect("/worker/home");
     } else {
       store.dispatch({
         type: "CHANGE_LOGIN",

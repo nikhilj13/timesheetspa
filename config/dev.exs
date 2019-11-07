@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :timesheetspa, Timesheetspa.Repo,
   username: "nikhil",
-  password: "postgres",
+  password: "HiGeipiega7e",
   database: "timesheetspa_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

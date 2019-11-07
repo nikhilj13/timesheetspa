@@ -9,14 +9,25 @@ defmodule TimesheetspaWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
+  pipeline :ajax do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
+  scope "/ajax", TimesheetspaWeb do
+    pipe_through :ajax
+
+    resources "/managers", ManagerController, except: [:new, :edit]
+    resources "/workers", WorkerController, except: [:new, :edit]
+    resources "/jobs", JobController, except: [:new, :edit]
+    resources "/sessions", SessionController, only: [:create], singleton: true
   end
 
   scope "/", TimesheetspaWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
     get "/*path", PageController, :index
   end
 
