@@ -28,9 +28,13 @@ Whenever a user logs into the system, their user information is store in the bro
 ### Seeded User Data
 
 **Worker**
+
 *Email:* carol@acme.com
+
 *Password:* password
 
 **Manager**
+
 *Email:* alice@acme.com
+
 *Password:* password
