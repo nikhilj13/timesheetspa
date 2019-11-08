@@ -21,7 +21,8 @@ defmodule TimesheetspaWeb.Router do
 
     resources "/managers", ManagerController, except: [:new, :edit]
     resources "/workers", WorkerController, except: [:new, :edit]
-    resources "/jobs", JobController, except: [:new, :edit]
+    resources "/jobs", JobController, except: [:edit]
+    resources "/timesheets", TimesheetController, except: [:edit]
     resources "/sessions", SessionController, only: [:create], singleton: true
   end
 

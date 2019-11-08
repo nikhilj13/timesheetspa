@@ -28,8 +28,14 @@ class Login extends React.Component {
   }
 
   render() {
+    const session = JSON.parse(localStorage.getItem("session"));
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
+    }
+
+    if (session) {
+      const user_type = session.user_type;
+      return <Redirect to={`/${user_type}/home`} />;
     }
 
     let { email, password, user_type, errors } = this.props;

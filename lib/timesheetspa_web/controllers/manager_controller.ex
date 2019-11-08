@@ -23,7 +23,7 @@ defmodule TimesheetspaWeb.ManagerController do
   end
 
   def show(conn, %{"id" => id}) do
-    manager = Managers.get_manager!(id)
+    manager = Managers.managers_and_workers(id)
     render(conn, "show.json", manager: manager)
   end
 

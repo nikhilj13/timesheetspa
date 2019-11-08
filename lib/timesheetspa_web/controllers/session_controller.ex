@@ -7,7 +7,6 @@ defmodule TimesheetspaWeb.SessionController do
 
 	def create(conn, %{"email" => email, "password" => password, "user_type" => type}) do
 		user = Workers.authenticate(email, password, type)
-		IO.inspect user, label: "User in session controller"
 		if user do
 			token = Phoenix.Token.sign(conn, "session", user.id)
 			resp = %{token: token, user_id: user.id, user_name: user.name, user_type: type}

@@ -8,7 +8,7 @@ defmodule Timesheetspa.Jobs.Job do
     field :job_code, :string
     field :name, :string
 
-    belongs_to :manager, Timesheetspa.Jobs.Job
+    belongs_to :manager, Timesheetspa.Managers.Manager
 
     timestamps()
   end
@@ -16,7 +16,7 @@ defmodule Timesheetspa.Jobs.Job do
   @doc false
   def changeset(job, attrs) do
     job
-    |> cast(attrs, [:job_code, :budget, :name, :description])
-    |> validate_required([:job_code, :budget, :name, :description])
+    |> cast(attrs, [:job_code, :budget, :name, :description, :manager_id])
+    |> validate_required([:job_code, :budget, :name, :description, :manager_id])
   end
 end

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Redirect } from 'react-router';
+import { newJob } from './ajax';
 
 class NewJob extends React.Component {
   constructor(props) {
@@ -80,19 +81,18 @@ class NewJob extends React.Component {
               </Form.Label>
               <Col sm={10}>
                 <Form.Control
-									type="textarea"
+									as="textarea"
 									rows="3"
                   placeholder="Job Description"
-                  onChange={ev => this.changed({ budget: ev.target.value })}
+                  onChange={ev => this.changed({ description: ev.target.value })}
                 />
               </Col>
             </Form.Group>
 
             <div className="text-align-center">
               <Button
-                variant="outline-success"
-                type="login"
-                onClick={() => submit_login(this)}
+                variant="outline-primary"
+                onClick={() => newJob()}
               >
                 Submit Job
               </Button>

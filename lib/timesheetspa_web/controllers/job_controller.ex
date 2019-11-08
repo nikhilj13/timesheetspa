@@ -14,10 +14,10 @@ defmodule TimesheetspaWeb.JobController do
   end
 
   def create(conn, %{"job" => job_params}) do
+    IO.inspect job_params, label: "job params in job create"
     with {:ok, %Job{} = job} <- Jobs.create_job(job_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.job_path(conn, :show, job))
       |> render("show.json", job: job)
     end
   end

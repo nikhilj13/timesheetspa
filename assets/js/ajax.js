@@ -40,18 +40,19 @@ export function get(path) {
 export function submit_login(form) {
   let state = store.getState();
 	let data = state.forms.login;
-	console.log("here")
-	console.log("submit_login data", data);
 
   post("/sessions", data).then(resp => {
-    console.log("Response from submit_login", resp);
-    if ( resp && resp.token) {
+    if (resp && resp.token) {
       localStorage.setItem("session", JSON.stringify(resp));
       store.dispatch({
         type: "LOG_IN",
         data: resp
-      });
-      form.redirect("/worker/home");
+			});
+			if (resp.user_type === 'worker') {
+				form.redirect("/worker/home");
+			} else if (resp.user_type === 'manager') {
+				form.redirect("/manager/home");
+			}
     } else {
       store.dispatch({
         type: "CHANGE_LOGIN",
@@ -60,3 +61,66 @@ export function submit_login(form) {
     }
   });
 }
+
+export function getWorkers(id) {
+  get(`/managers/${id}`).then(resp => {
+    store.dispatch({
+      type: 'GET_WORKERS',
+      data: resp.data
+    })
+  })
+}
+
+export function getJobs() {
+  get('/jobs').then(resp => {
+    store.dispatch({
+      type: 'GET_JOBS',
+      data: resp.data
+    })
+  })
+}
+
+export function newJob() {
+	let state = store.getState();
+	let data = state.forms.new_job;
+
+  post("/jobs", {job: data}).then(resp => {
+    if (resp && resp.data) {
+      store.dispatch({
+        type: "NEW_JOB",
+        data: resp.data
+			});
+			if (resp.user_type === 'manager') {
+				form.redirect("/manager/jobs");
+			}
+    } else {
+      store.dispatch({
+        type: "CHANGE_NEW_JOB",
+        data: { errors: JSON.stringify(resp.errors) }
+      });
+    }
+  });
+}
+
+export function newTimesheet() {
+	let state = store.getState();
+	let data = state.forms.new_timesheet;
+
+  post("/timesheets", {timesheet: data}).then(resp => {
+    if (resp && resp.data) {
+      store.dispatch({
+        type: "NEW_TIMESHEET",
+        data: resp.data
+			});
+			if (resp.user_type === 'manager') {
+				form.redirect("/worker/home");
+			}
+    } else {
+      store.dispatch({
+        type: "CHANGE_NEW_TIMESHEET",
+        data: { errors: JSON.stringify(resp.errors) }
+      });
+    }
+  });
+}
+
