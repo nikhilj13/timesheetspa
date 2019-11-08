@@ -2,8 +2,12 @@ import { createStore, combineReducers } from "redux";
 import deepFreeze from "deep-freeze-strict";
 
 let session0 = localStorage.getItem("session");
+let user_id = "";
 if (session0) {
-  session0 = JSON.parse(session0);
+	session0 = JSON.parse(session0);
+	if (session0.user_id) {
+		user_id = session0.user_id;
+	}
 }
 
 function login(
@@ -24,7 +28,7 @@ function new_job(
     budget: "",
     name: "",
     description: "",
-    manager_id: session0.user_id || "",
+    manager_id: user_id,
     errors: null
   },
   action
@@ -57,7 +61,7 @@ function new_timesheet(
 		job8: null,
 		hours8: null,
 		approved: false,
-		worker_id: session0.user_id || ""
+		worker_id: user_id
 	},
 	action
 ) {
