@@ -24,7 +24,7 @@ function new_job(
     budget: "",
     name: "",
     description: "",
-    manager_id: session0.user_id,
+    manager_id: session0.user_id || "",
     errors: null
   },
   action
@@ -57,7 +57,7 @@ function new_timesheet(
 		job8: null,
 		hours8: null,
 		approved: false,
-		worker_id: session0.user_id
+		worker_id: session0.user_id || ""
 	},
 	action
 ) {
